@@ -6,12 +6,21 @@
     <link rel="stylesheet" href="Servicio.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
-        body { font-family: sans-serif; background: #f4f4f4; }
+        body { 
+            font-family: sans-serif; 
+            margin: 0;
+            padding: 0;
+            background-image: url("logo.jpg"); /* Asegúrate de subir logo.jpg a GitHub */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
         #menu { background: #ef3e33; padding: 10px; display: flex; gap: 10px; position: sticky; top: 0; z-index: 100; }
         .btn-menu { color: white; background: none; border: 1px solid white; padding: 8px 15px; cursor: pointer; border-radius: 5px; }
-        .seccion { padding: 20px; display: none; }
-        .tarjeta { background: white; border: 1px solid #ddd; padding: 15px; width: 220px; text-align: center; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .tarjeta img { width: 100%; border-radius: 5px; }
+        .seccion { padding: 20px; display: none; background: rgba(255, 255, 255, 0.9); min-height: 100vh; }
+        .tarjeta { background: white; border: 1px solid #ddd; padding: 15px; width: 200px; text-align: center; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .tarjeta img { width: 100%; height: 150px; object-fit: contain; border-radius: 5px; }
         .precio { font-weight: bold; color: #ef3e33; font-size: 1.2em; margin: 10px 0; }
         .btn-comprar { background: #ef3e33; color: white; border: none; padding: 10px; width: 100%; cursor: pointer; border-radius: 5px; font-weight: bold; }
         #lista-admin { width: 100%; border-collapse: collapse; background: white; margin-top: 20px; }
@@ -21,7 +30,6 @@
         .caja-info { background: white; padding: 20px; border-radius: 8px; border-left: 5px solid #ef3e33; flex: 1; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
     </style>
 </head>
-
 <body>
 
 <div id="menu">
@@ -32,33 +40,33 @@
 </div>
 
 <div id="bebidas" class="seccion" style="display:block;">
-    <h2>Equipos Disponibles</h2>
+    <h2>Bebidas Frías</h2>
     <div style="display:flex; flex-wrap:wrap; gap:20px;">
         <div class="tarjeta">
             <h3>Cola</h3>
-            <div class="precio">$0.50 ctvs</div>
+            <div class="precio">$0.50</div>
             <img src="https://golosinasgema.com/wp-content/uploads/2025/06/11-1.png" alt="Cola">
-            <button class="btn-comprar" onclick="agregar('cola', 0.50)">Agregar</button>
+            <button class="btn-comprar" onclick="agregar('Cola', 0.50)">Agregar</button>
         </div>
         <div class="tarjeta">
             <h3>Güitig</h3>
-            <div class="precio">$0.75 ctvs</div>
-              <img src="https://almacenescorsa.com/wp-content/uploads/2021/07/Agua-Mineral-con-Gas-Guitig-500ml.jpg" alt="Güitig">
+            <div class="precio">$0.75</div>
+            <img src="https://almacenescorsa.com/wp-content/uploads/2021/07/Agua-Mineral-con-Gas-Guitig-500ml.jpg" alt="Güitig">
             <button class="btn-comprar" onclick="agregar('Güitig', 0.75)">Agregar</button>
         </div>
         <div class="tarjeta">
             <h3>Sporade Mediano</h3>
-            <div class="precio">$0.75 ctvs</div>
-              <img src="https://plazavea.vteximg.com.br/arquivos/ids/27582290-450-450/20082644.jpg?v=638316576445230000" alt="Sporade Mediano">
+            <div class="precio">$0.75</div>
+            <img src="https://plazavea.vteximg.com.br/arquivos/ids/27582290-450-450/20082644.jpg?v=638316576445230000" alt="Sporade">
             <button class="btn-comprar" onclick="agregar('Sporade Mediano', 0.75)">Agregar</button>
         </div>
-          <div class="tarjeta">
+        <div class="tarjeta">
             <h3>Sporade Grande</h3>
-            <div class="precio">$1.50 ctvs</div>
-              <img src="https://plazavea.vteximg.com.br/arquivos/ids/29322631-450-450/20082646.jpg?v=638593275579170000" alt="Sporade Grande">
-            <button class="btn-comprar" onclick="agregar('Sporade Grande', 0.75)">Agregar</button>
+            <div class="precio">$1.50</div>
+            <img src="https://plazavea.vteximg.com.br/arquivos/ids/29322631-450-450/20082646.jpg?v=638593275579170000" alt="Sporade G">
+            <button class="btn-comprar" onclick="agregar('Sporade Grande', 1.50)">Agregar</button>
         </div>
-          <div class="tarjeta">
+           <div class="tarjeta">
             <h3>Biela</h3>
             <div class="precio">$0.75 ctvs</div>
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDRnSc9FOsp6AoSP-Zl_Oqr6m9ZZD0Dk-x4g&s" alt="Biela">
@@ -72,40 +80,40 @@
         </div>
     </div>
 </div>
-
-
+    </div>
+</div>
 
 <div id="snacks" class="seccion">
     <h2>Snacks Disponibles</h2>
     <div style="display:flex; flex-wrap:wrap; gap:20px;">
-        
         <div class="tarjeta">
             <h3>Papas</h3>
-            <div class="precio">$0.50 ctvs</div>
+            <div class="precio">$0.50</div>
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsfUiq12QBHT9IzEkT6hSN8HYQQELNeeZdMg&s" alt="Papas">
             <button class="btn-comprar" onclick="agregar('Papas', 0.50)">Agregar</button>
         </div>
-
         <div class="tarjeta">
             <h3>Chifles</h3>
-            <div class="precio">$0.50 ctvs</div>
+            <div class="precio">$0.50</div>
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv2LLjzEjJy2P6wQoqEuLCSbzIGPJhRkR_Qg&s" alt="Chifles">
             <button class="btn-comprar" onclick="agregar('Chifles', 0.50)">Agregar</button>
         </div>
+    </div>
+</div>
 
-    </div> </div>
 <div id="carrito" class="seccion">
     <h2>Mi Carrito</h2>
-    <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-        <select id="nombreCliente" style="padding: 10px; width: 300px;">
-            <option value="">Seleccione...</option>
+    <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ddd;">
+        <label><b>Seleccione Cliente:</b></label><br>
+        <select id="nombreCliente" style="padding: 10px; width: 300px; margin: 10px 0;">
+            <option value="">Seleccione...</option> 
             <option value="Medina Ronald">Medina Ronald</option>
             <option value="Borja Dennis">Borja Dennis</option>
             <option value="Velez Pablo">Velez Pablo</option>
             <option value="Bayas Freddy">Bayas Freddy</option>
             <option value="Franco Rolando">Franco Rolando</option>
             <option value="Veliz Rolando">Veliz Rolando</option>
-            <option value="Garrdio Gustavo">Borja Dennis</option>
+            <option value="Garrdio Gustavo">Garrdio Gustavo</option>
             <option value="Chenche Jenny">Chenche Jenny</option>
             <option value="Villota Luis">Villota Luis</option>
             <option value="Huancayo Richard">Huancayo Richard</option>
@@ -113,20 +121,24 @@
             <option value="Morillo Josias">Morillo Josias</option>
             <option value="Freire Wilson">Freire Wilson</option>
             <option value="Coronel Silvia">Coronel Silvia</option>
-        </select> 
-            <select id="metodoPago" style="padding: 10px;">
+        </select>
+        <button onclick="descargarReporteCliente()" style="padding: 10px; cursor: pointer; background: #333; color: white; border: none; border-radius: 5px; margin-left: 10px;">
+            📄 Reporte Individual
+        </button>
+        <br>
+        <label><b>Método de Pago:</b></label><br>
+        <select id="metodoPago" style="padding: 10px; width: 300px; margin-top: 10px;">
             <option value="Efectivo">Efectivo</option>
             <option value="Deuda">Deuda</option>
         </select>
     </div>
     <div id="lista-carrito"></div>
-    <h3>Total: $<span id="total-carrito">0.00</span></h3>
-    <button class="btn-comprar" onclick="finalizarCompra()" style="width: auto; padding: 10px 40px;">Finalizar y Guardar</button>
+    <h3>Total a Pagar: $<span id="total-carrito">0.00</span></h3>
+    <button class="btn-comprar" onclick="finalizarCompra()" style="width: auto; padding: 10px 40px;">Finalizar y Guardar Venta</button>
 </div>
 
 <div id="admin" class="seccion">
-    <h2>Historial de Ventas (Base de Datos Local)</h2>
-    
+    <h2>Historial de Ventas</h2>
     <div class="resumen-caja">
         <div class="caja-info">
             <h4>💰 Total Ganancia (Efectivo)</h4>
@@ -137,7 +149,6 @@
             <h2 id="total-deudas">$0.00</h2>
         </div>
     </div>
-
     <table id="lista-admin">
         <thead>
             <tr>
@@ -152,13 +163,12 @@
         <tbody id="cuerpo-tabla"></tbody>
     </table>
     <br>
-    <button onclick="descargarHistoricoExcel()" style="padding:10px; cursor:pointer;">📥 Descargar Todo el Historial a Excel</button>
-    <button onclick="borrarTodo()" style="padding:10px; background:red; color:white; border:none; cursor:pointer; margin-left:10px;">🗑️ Borrar Todo</button>
+    <button onclick="descargarHistoricoExcel()" style="padding:12px; cursor:pointer; background: #28a745; color: white; border:none; border-radius:5px;">📥 Excel General con Sumatoria</button>
+    <button onclick="borrarTodo()" style="padding:12px; background:red; color:white; border:none; cursor:pointer; margin-left:10px; border-radius:5px;">🗑️ Borrar Historial</button>
 </div>
 
 <script>
     let carrito = [];
-    // Cargar ventas guardadas al iniciar
     let ventasGuardadas = JSON.parse(localStorage.getItem('ventas_claro')) || [];
 
     function mostrar(id) {
@@ -178,7 +188,7 @@
         div.innerHTML = "";
         carrito.forEach((p, i) => {
             total += p.precio;
-            div.innerHTML += `<p>${p.nombre} - $${p.precio} <button onclick="quitar(${i})">x</button></p>`;
+            div.innerHTML += `<p>✅ ${p.nombre} - $${p.precio.toFixed(2)} <button onclick="quitar(${i})" style="color:red; border:none; background:none; cursor:pointer;">[Quitar]</button></p>`;
         });
         document.getElementById("total-carrito").innerText = total.toFixed(2);
         document.getElementById("contador").innerText = carrito.length;
@@ -191,9 +201,8 @@
         let metodo = document.getElementById("metodoPago").value;
         let total = parseFloat(document.getElementById("total-carrito").innerText);
 
-        if (cliente === "" || carrito.length === 0) return alert("Completa los datos");
+        if (cliente === "" || carrito.length === 0) return alert("🔴 Por favor selecciona un cliente y agrega productos.");
 
-        // Crear registro
         let nuevaVenta = {
             fecha: new Date().toLocaleString(),
             cliente: cliente,
@@ -202,11 +211,10 @@
             metodo: metodo
         };
 
-        // Guardar en la "Base de Datos" del navegador
         ventasGuardadas.push(nuevaVenta);
         localStorage.setItem('ventas_claro', JSON.stringify(ventasGuardadas));
 
-        alert("✅ ¡Venta guardada con éxito!");
+        alert("✅ Venta de " + cliente + " guardada.");
         carrito = [];
         document.getElementById("nombreCliente").value = "";
         actualizarCarrito();
@@ -215,74 +223,60 @@
 
     function actualizarTablaAdmin() {
         let tabla = document.getElementById("cuerpo-tabla");
-        let gEfectivo = 0;
-        let tDeuda = 0;
+        let gEfectivo = 0, tDeuda = 0;
         tabla.innerHTML = "";
-
         ventasGuardadas.forEach((v, i) => {
             if(v.metodo === "Efectivo") gEfectivo += v.monto;
             else tDeuda += v.monto;
-
-            tabla.innerHTML += `
-                <tr>
-                    <td>${v.fecha}</td>
-                    <td>${v.cliente}</td>
-                    <td>${v.productos}</td>
-                    <td>$${v.monto.toFixed(2)}</td>
-                    <td style="color:${v.metodo === 'Deuda' ? 'red' : 'green'}"><b>${v.metodo}</b></td>
-                    <td><button onclick="eliminarVenta(${i})">Eliminar</button></td>
-                </tr>`;
+            tabla.innerHTML += `<tr><td>${v.fecha}</td><td>${v.cliente}</td><td>${v.productos}</td><td>$${v.monto.toFixed(2)}</td><td style="color:${v.metodo === 'Deuda' ? 'red' : 'green'}"><b>${v.metodo}</b></td><td><button onclick="eliminarVenta(${i})">Eliminar</button></td></tr>`;
         });
-
         document.getElementById("ganancia-efectivo").innerText = "$" + gEfectivo.toFixed(2);
         document.getElementById("total-deudas").innerText = "$" + tDeuda.toFixed(2);
     }
 
     function eliminarVenta(i) {
-        ventasGuardadas.splice(i, 1);
-        localStorage.setItem('ventas_claro', JSON.stringify(ventasGuardadas));
-        actualizarTablaAdmin();
-    }
-
-    function borrarTodo() {
-        if(confirm("¿Seguro que quieres borrar todo el historial?")) {
-            localStorage.clear();
-            ventasGuardadas = [];
+        if(confirm("¿Eliminar este registro?")) {
+            ventasGuardadas.splice(i, 1);
+            localStorage.setItem('ventas_claro', JSON.stringify(ventasGuardadas));
             actualizarTablaAdmin();
         }
     }
 
     function descargarHistoricoExcel() {
-    // 1. Calculamos la suma total de todos los montos en el historial
-    let sumaTotal = ventasGuardadas.reduce((acc, v) => acc + v.monto, 0);
+        let sumaTotal = ventasGuardadas.reduce((acc, v) => acc + v.monto, 0);
+        let datosParaExcel = ventasGuardadas.map(v => ({ Fecha: v.fecha, Cliente: v.cliente, Productos: v.productos, Monto: v.monto, Metodo: v.metodo }));
+        datosParaExcel.push({}, { Productos: "TOTAL GENERAL:", Monto: sumaTotal });
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.json_to_sheet(datosParaExcel);
+        XLSX.utils.book_append_sheet(wb, ws, "Ventas");
+        XLSX.writeFile(wb, "Reporte_General_Ventas.xlsx");
+    }
 
-    // 2. Creamos una copia de los datos para no alterar la tabla original
-    let datosParaExcel = ventasGuardadas.map(v => ({
-        Fecha: v.fecha,
-        Cliente: v.cliente,
-        Productos: v.productos,
-        Monto: v.monto,
-        Metodo: v.metodo
-    }));
+    function descargarReporteCliente() {
+        let cliente = document.getElementById("nombreCliente").value;
+        if (cliente === "") return alert("Selecciona un cliente.");
+        let filtrados = ventasGuardadas.filter(v => v.cliente === cliente);
+        if (filtrados.length === 0) return alert("Sin consumos para " + cliente);
 
-    // 3. Agregamos una fila vacía y luego la fila del TOTAL
-    datosParaExcel.push({}); // Fila en blanco para separar
-    datosParaExcel.push({
-        Fecha: "",
-        Cliente: "",
-        Productos: "TOTAL GENERAL:",
-        Monto: sumaTotal, // Aquí sale el número sumado
-        Metodo: ""
-    });
+        let pagado = filtrados.filter(v => v.metodo === "Efectivo").reduce((acc, v) => acc + v.monto, 0);
+        let deuda = filtrados.filter(v => v.metodo === "Deuda").reduce((acc, v) => acc + v.monto, 0);
 
-    // 4. Generamos el archivo
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.json_to_sheet(datosParaExcel);
-    
-    XLSX.utils.book_append_sheet(wb, ws, "Historial Ventas");
-    XLSX.writeFile(wb, "Reporte_General_Ventas.xlsx");
-}
+        let datos = filtrados.map(v => ({ Fecha: v.fecha, Productos: v.productos, Monto: v.monto, Tipo: v.metodo }));
+        datos.push({}, { Productos: "YA PAGADO (Efectivo):", Monto: pagado }, { Productos: "POR PAGAR (Deuda):", Monto: deuda }, { Productos: "TOTAL CONSUMIDO:", Monto: pagado + deuda });
+
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.json_to_sheet(datos);
+        XLSX.utils.book_append_sheet(wb, ws, "Consumo");
+        XLSX.writeFile(wb, `Consumo_${cliente}.xlsx`);
+    }
+
+    function borrarTodo() {
+        if(confirm("¿Borrar todo el historial?")) {
+            localStorage.clear();
+            ventasGuardadas = [];
+            actualizarTablaAdmin();
+        }
+    }
 </script>
-
 </body>
 </html>
