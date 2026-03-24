@@ -2,32 +2,178 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Ventas - Claro</title>
-    <link rel="stylesheet" href="Servicio.css">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
     <style>
+        /* =========================================
+           ESTILOS CSS GENERALES
+           ========================================= */
+        :root {
+            --claro-red: #ef3e33;
+            --claro-dark: #333333;
+            --bg-light: #f4f4f4;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
         body { 
-            font-family: sans-serif; 
-            margin: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            margin: 0; 
             padding: 0;
-            background-image: url("logo.jpg"); /* Asegúrate de subir logo.jpg a GitHub */
+            background-image: url("logo.jpg"); /* Fondo personalizado */
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            background-repeat: no-repeat;
+            background-color: var(--bg-light);
         }
-        #menu { background: #ef3e33; padding: 10px; display: flex; gap: 10px; position: sticky; top: 0; z-index: 100; }
-        .btn-menu { color: white; background: none; border: 1px solid white; padding: 8px 15px; cursor: pointer; border-radius: 5px; }
-        .seccion { padding: 20px; display: none; background: rgba(255, 255, 255, 0.9); min-height: 100vh; }
-        .tarjeta { background: white; border: 1px solid #ddd; padding: 15px; width: 200px; text-align: center; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .tarjeta img { width: 100%; height: 150px; object-fit: contain; border-radius: 5px; }
-        .precio { font-weight: bold; color: #ef3e33; font-size: 1.2em; margin: 10px 0; }
-        .btn-comprar { background: #ef3e33; color: white; border: none; padding: 10px; width: 100%; cursor: pointer; border-radius: 5px; font-weight: bold; }
-        #lista-admin { width: 100%; border-collapse: collapse; background: white; margin-top: 20px; }
-        #lista-admin th, #lista-admin td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        #lista-admin th { background: #333; color: white; }
-        .resumen-caja { display: flex; gap: 20px; margin-top: 20px; }
-        .caja-info { background: white; padding: 20px; border-radius: 8px; border-left: 5px solid #ef3e33; flex: 1; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+
+        /* Menú de Navegación */
+        #menu { 
+            background: var(--claro-red); 
+            padding: 12px; 
+            display: flex; 
+            gap: 12px; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            justify-content: center;
+        }
+
+        .btn-menu { 
+            color: white; 
+            background: rgba(255,255,255,0.1); 
+            border: 1px solid white; 
+            padding: 10px 20px; 
+            cursor: pointer; 
+            border-radius: 25px; 
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-menu:hover { 
+            background: white; 
+            color: var(--claro-red); 
+        }
+
+        /* Contenedores de Sección */
+        .seccion { 
+            padding: 30px; 
+            display: none; 
+            background: rgba(255, 255, 255, 0.96); 
+            min-height: 100vh; 
+            max-width: 1100px; 
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        /* Grid de Productos */
+        .grid-productos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+            padding: 20px 0;
+        }
+
+        .tarjeta { 
+            background: var(--white); 
+            border: 1px solid #eee; 
+            padding: 20px; 
+            text-align: center; 
+            border-radius: 12px; 
+            box-shadow: var(--shadow);
+            transition: transform 0.2s;
+        }
+
+        .tarjeta:hover { transform: translateY(-5px); }
+
+        .tarjeta img { 
+            width: 100%; 
+            height: 160px; 
+            object-fit: contain; 
+            margin-bottom: 15px;
+        }
+
+        .precio { 
+            font-weight: 800; 
+            color: var(--claro-red); 
+            font-size: 1.4em; 
+            margin: 10px 0; 
+        }
+
+        .btn-comprar { 
+            background: var(--claro-red); 
+            color: white; 
+            border: none; 
+            padding: 12px; 
+            width: 100%; 
+            cursor: pointer; 
+            border-radius: 8px; 
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Formularios y Selects */
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        /* Tablas y Reportes */
+        #lista-admin { 
+            width: 100%; 
+            border-collapse: collapse; 
+            background: white; 
+            margin-top: 25px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #lista-admin th { background: var(--claro-dark); color: white; padding: 15px; }
+        #lista-admin td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+
+        .resumen-caja { 
+            display: flex; 
+            gap: 20px; 
+            margin: 20px 0; 
+        }
+
+        .caja-info { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 12px; 
+            border-left: 8px solid var(--claro-red); 
+            flex: 1; 
+            box-shadow: var(--shadow); 
+        }
+
+        .filtro-mes {
+            background: #eee;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .badge-pago {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.85em;
+        }
+
+        /* Botones de Acción */
+        .btn-excel { background: #28a745; color: white; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .btn-borrar { background: #dc3545; color: white; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -36,125 +182,114 @@
     <button class="btn-menu" onclick="mostrar('bebidas')">📱 Bebidas</button>
     <button class="btn-menu" onclick="mostrar('snacks')">📦 Snacks</button>
     <button class="btn-menu" onclick="mostrar('carrito')">🛒 Carrito (<span id="contador">0</span>)</button>
-    <button class="btn-menu" onclick="mostrar('admin')" style="background: #333;">📊 Reporte General</button>
+    <button class="btn-menu" onclick="mostrar('admin')" style="background: var(--claro-dark);">📊 Reporte General</button>
 </div>
 
 <div id="bebidas" class="seccion" style="display:block;">
     <h2>Bebidas Frías</h2>
-    <div style="display:flex; flex-wrap:wrap; gap:20px;">
+    <div class="grid-productos">
         <div class="tarjeta">
-            <h3>Cola</h3>
-            <div class="precio">$0.50</div>
-            <img src="https://golosinasgema.com/wp-content/uploads/2025/06/11-1.png" alt="Cola">
+            <h3>Cola</h3><div class="precio">$0.50</div>
+            <img src="https://golosinasgema.com/wp-content/uploads/2025/06/11-1.png">
             <button class="btn-comprar" onclick="agregar('Cola', 0.50)">Agregar</button>
         </div>
         <div class="tarjeta">
-            <h3>Güitig</h3>
-            <div class="precio">$0.75</div>
-            <img src="https://almacenescorsa.com/wp-content/uploads/2021/07/Agua-Mineral-con-Gas-Guitig-500ml.jpg" alt="Güitig">
+            <h3>Güitig</h3><div class="precio">$0.75</div>
+            <img src="https://almacenescorsa.com/wp-content/uploads/2021/07/Agua-Mineral-con-Gas-Guitig-500ml.jpg">
             <button class="btn-comprar" onclick="agregar('Güitig', 0.75)">Agregar</button>
         </div>
         <div class="tarjeta">
-            <h3>Sporade Mediano</h3>
-            <div class="precio">$0.75</div>
-            <img src="https://plazavea.vteximg.com.br/arquivos/ids/27582290-450-450/20082644.jpg?v=638316576445230000" alt="Sporade">
-            <button class="btn-comprar" onclick="agregar('Sporade Mediano', 0.75)">Agregar</button>
+            <h3>Sporade M</h3><div class="precio">$0.75</div>
+            <img src="https://plazavea.vteximg.com.br/arquivos/ids/27582290-450-450/20082644.jpg">
+            <button class="btn-comprar" onclick="agregar('Sporade M', 0.75)">Agregar</button>
         </div>
         <div class="tarjeta">
-            <h3>Sporade Grande</h3>
-            <div class="precio">$1.50</div>
-            <img src="https://plazavea.vteximg.com.br/arquivos/ids/29322631-450-450/20082646.jpg?v=638593275579170000" alt="Sporade G">
-            <button class="btn-comprar" onclick="agregar('Sporade Grande', 1.50)">Agregar</button>
-        </div>
-           <div class="tarjeta">
-            <h3>Biela</h3>
-            <div class="precio">$0.75 ctvs</div>
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDRnSc9FOsp6AoSP-Zl_Oqr6m9ZZD0Dk-x4g&s" alt="Biela">
-            <button class="btn-comprar" onclick="agregar('Biela', 0.75)">Agregar</button>
-        </div>
-          <div class="tarjeta">
-            <h3>V220</h3>
-            <div class="precio">$0.75 ctvs</div>
-              <img src="https://static.wixstatic.com/media/6e7b4a_a366dc068cf24a658e3626311d907172~mv2.jpg/v1/fill/w_560,h_622,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/6e7b4a_a366dc068cf24a658e3626311d907172~mv2.jpg" alt="V220">
+            <h3>V220</h3><div class="precio">$0.75</div>
+            <img src="https://static.wixstatic.com/media/6e7b4a_a366dc068cf24a658e3626311d907172~mv2.jpg/v1/fill/w_560,h_622,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/6e7b4a_a366dc068cf24a658e3626311d907172~mv2.jpg">
             <button class="btn-comprar" onclick="agregar('V220', 0.75)">Agregar</button>
         </div>
-    </div>
-</div>
+        <div class="tarjeta">
+            <h3>Sporade Grande</h3><div class="precio">$1.50</div>
+            <img src="https://plazavea.vteximg.com.br/arquivos/ids/29322631-450-450/20082646.jpg?v=638593275579170000">
+            <button class="btn-comprar" onclick="agregar('Sporade G', 1.50)">Agregar</button>
+        </div>
+         <div class="tarjeta">
+            <h3>Biela</h3><div class="precio">$1.25</div>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDRnSc9FOsp6AoSP-Zl_Oqr6m9ZZD0Dk-x4g&s">
+            <button class="btn-comprar" onclick="agregar('Biela', 1.25)">Agregar</button>
+        </div>
     </div>
 </div>
 
 <div id="snacks" class="seccion">
-    <h2>Snacks Disponibles</h2>
-    <div style="display:flex; flex-wrap:wrap; gap:20px;">
+    <h2>Snacks</h2>
+    <div class="grid-productos">
         <div class="tarjeta">
-            <h3>Papas</h3>
-            <div class="precio">$0.50</div>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsfUiq12QBHT9IzEkT6hSN8HYQQELNeeZdMg&s" alt="Papas">
+            <h3>Papas</h3><div class="precio">$0.50</div>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsfUiq12QBHT9IzEkT6hSN8HYQQELNeeZdMg&s">
             <button class="btn-comprar" onclick="agregar('Papas', 0.50)">Agregar</button>
         </div>
         <div class="tarjeta">
-            <h3>Chifles</h3>
-            <div class="precio">$0.50</div>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv2LLjzEjJy2P6wQoqEuLCSbzIGPJhRkR_Qg&s" alt="Chifles">
+            <h3>Chifles</h3><div class="precio">$0.50</div>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv2LLjzEjJy2P6wQoqEuLCSbzIGPJhRkR_Qg&s">
             <button class="btn-comprar" onclick="agregar('Chifles', 0.50)">Agregar</button>
         </div>
     </div>
 </div>
 
 <div id="carrito" class="seccion">
-    <h2>Mi Carrito</h2>
-    <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ddd;">
-        <label><b>Seleccione Cliente:</b></label><br>
-        <select id="nombreCliente" style="padding: 10px; width: 300px; margin: 10px 0;">
-            <option value="">Seleccione...</option> 
+    <h2>Mi Carrito de Compras</h2>
+    <div style="background: #f9f9f9; padding: 20px; border-radius: 12px; border: 1px solid #ddd;">
+        <label><b>Seleccionar Cliente:</b></label>
+        <select id="nombreCliente" class="form-control">
+            <option value="">Seleccione un nombre...</option> 
             <option value="Medina Ronald">Medina Ronald</option>
             <option value="Borja Dennis">Borja Dennis</option>
             <option value="Velez Pablo">Velez Pablo</option>
-            <option value="Bayas Freddy">Bayas Freddy</option>
-            <option value="Franco Rolando">Franco Rolando</option>
-            <option value="Veliz Rolando">Veliz Rolando</option>
-            <option value="Garrdio Gustavo">Garrdio Gustavo</option>
-            <option value="Chenche Jenny">Chenche Jenny</option>
-            <option value="Villota Luis">Villota Luis</option>
-            <option value="Huancayo Richard">Huancayo Richard</option>
-            <option value="Briones Jose">Briones Jose</option>
-            <option value="Morillo Josias">Morillo Josias</option>
-            <option value="Freire Wilson">Freire Wilson</option>
             <option value="Coronel Silvia">Coronel Silvia</option>
+            <option value="Bayas Freddy">Bayas Freddy</option>
         </select>
-        <button onclick="descargarReporteCliente()" style="padding: 10px; cursor: pointer; background: #333; color: white; border: none; border-radius: 5px; margin-left: 10px;">
-            📄 Reporte Individual
-        </button>
-        <br>
-        <label><b>Método de Pago:</b></label><br>
-        <select id="metodoPago" style="padding: 10px; width: 300px; margin-top: 10px;">
-            <option value="Efectivo">Efectivo</option>
-            <option value="Deuda">Deuda</option>
+        
+        <label><b>Forma de Pago:</b></label>
+        <select id="metodoPago" class="form-control">
+            <option value="Efectivo">Efectivo (Pagado)</option>
+            <option value="Credito">Crédito (Por Cobrar)</option>
         </select>
     </div>
-    <div id="lista-carrito"></div>
-    <h3>Total a Pagar: $<span id="total-carrito">0.00</span></h3>
-    <button class="btn-comprar" onclick="finalizarCompra()" style="width: auto; padding: 10px 40px;">Finalizar y Guardar Venta</button>
+
+    <div id="lista-carrito" style="margin: 20px 0;"></div>
+    
+    <div style="text-align: right;">
+        <h3>Total a Pagar: $<span id="total-carrito">0.00</span></h3>
+        <button class="btn-comprar" style="width: auto; padding: 15px 50px;" onclick="finalizarCompra()">Confirmar Venta</button>
+    </div>
 </div>
 
 <div id="admin" class="seccion">
-    <h2>Historial de Ventas</h2>
+    <h2>Panel de Control Mensual</h2>
+    
+    <div class="filtro-mes">
+        <strong>Seleccione Mes de Consulta:</strong>
+        <select id="selectorMes" onchange="actualizarTablaAdmin()"></select>
+    </div>
+
     <div class="resumen-caja">
         <div class="caja-info">
-            <h4>💰 Total Ganancia (Efectivo)</h4>
+            <p>💰 Ganancia Mes (Efectivo)</p>
             <h2 id="ganancia-efectivo">$0.00</h2>
         </div>
         <div class="caja-info">
-            <h4>🔴 Total por Cobrar (Deudas)</h4>
+            <p>🔴 Deuda Mes (Crédito)</p>
             <h2 id="total-deudas">$0.00</h2>
         </div>
     </div>
+
     <table id="lista-admin">
         <thead>
             <tr>
-                <th>Fecha</th>
+                <th>Fecha/Hora</th>
                 <th>Cliente</th>
-                <th>Producto</th>
+                <th>Detalle Productos</th>
                 <th>Monto</th>
                 <th>Estado</th>
                 <th>Acción</th>
@@ -162,19 +297,27 @@
         </thead>
         <tbody id="cuerpo-tabla"></tbody>
     </table>
-    <br>
-    <button onclick="descargarHistoricoExcel()" style="padding:12px; cursor:pointer; background: #28a745; color: white; border:none; border-radius:5px;">📥 Excel General con Sumatoria</button>
-    <button onclick="borrarTodo()" style="padding:12px; background:red; color:white; border:none; cursor:pointer; margin-left:10px; border-radius:5px;">🗑️ Borrar Historial</button>
+    
+    <div style="margin-top: 30px; display: flex; gap: 10px;">
+        <button class="btn-excel" onclick="descargarHistoricoExcel()">📥 Descargar Excel General (Todas las Hojas)</button>
+        <button class="btn-borrar" onclick="borrarTodo()">🗑️ Resetear Sistema</button>
+    </div>
 </div>
 
 <script>
+    /* =========================================
+       LÓGICA JAVASCRIPT
+       ========================================= */
     let carrito = [];
     let ventasGuardadas = JSON.parse(localStorage.getItem('ventas_claro')) || [];
 
     function mostrar(id) {
         document.querySelectorAll(".seccion").forEach(s => s.style.display = "none");
         document.getElementById(id).style.display = "block";
-        if(id === 'admin') actualizarTablaAdmin();
+        if(id === 'admin') {
+            cargarSelectorMeses();
+            actualizarTablaAdmin();
+        }
     }
 
     function agregar(nombre, precio) {
@@ -188,7 +331,10 @@
         div.innerHTML = "";
         carrito.forEach((p, i) => {
             total += p.precio;
-            div.innerHTML += `<p>✅ ${p.nombre} - $${p.precio.toFixed(2)} <button onclick="quitar(${i})" style="color:red; border:none; background:none; cursor:pointer;">[Quitar]</button></p>`;
+            div.innerHTML += `<div style="padding:10px; border-bottom:1px solid #eee; display:flex; justify-content:space-between;">
+                <span>✅ ${p.nombre}</span>
+                <span>$${p.precio.toFixed(2)} <button onclick="quitar(${i})" style="color:red; border:none; background:none; cursor:pointer; font-weight:bold;">[Quitar]</button></span>
+            </div>`;
         });
         document.getElementById("total-carrito").innerText = total.toFixed(2);
         document.getElementById("contador").innerText = carrito.length;
@@ -197,14 +343,19 @@
     function quitar(i) { carrito.splice(i, 1); actualizarCarrito(); }
 
     function finalizarCompra() {
-        let cliente = document.getElementById("nombreCliente").value;
-        let metodo = document.getElementById("metodoPago").value;
-        let total = parseFloat(document.getElementById("total-carrito").innerText);
+        const cliente = document.getElementById("nombreCliente").value;
+        const metodo = document.getElementById("metodoPago").value;
+        const total = parseFloat(document.getElementById("total-carrito").innerText);
 
-        if (cliente === "" || carrito.length === 0) return alert("🔴 Por favor selecciona un cliente y agrega productos.");
+        if (!cliente || carrito.length === 0) return alert("Error: Debe elegir un cliente y productos.");
 
-        let nuevaVenta = {
-            fecha: new Date().toLocaleString(),
+        const ahora = new Date();
+        const mesAno = `${ahora.getMonth() + 1}/${ahora.getFullYear()}`; // Identificador de mes
+
+        const nuevaVenta = {
+            id: Date.now(),
+            fecha: ahora.toLocaleString(),
+            mesAno: mesAno,
             cliente: cliente,
             productos: carrito.map(p => p.nombre).join(", "),
             monto: total,
@@ -214,67 +365,93 @@
         ventasGuardadas.push(nuevaVenta);
         localStorage.setItem('ventas_claro', JSON.stringify(ventasGuardadas));
 
-        alert("✅ Venta de " + cliente + " guardada.");
+        alert("Venta guardada en el historial.");
         carrito = [];
-        document.getElementById("nombreCliente").value = "";
         actualizarCarrito();
         mostrar('admin');
     }
 
-    function actualizarTablaAdmin() {
-        let tabla = document.getElementById("cuerpo-tabla");
-        let gEfectivo = 0, tDeuda = 0;
-        tabla.innerHTML = "";
-        ventasGuardadas.forEach((v, i) => {
-            if(v.metodo === "Efectivo") gEfectivo += v.monto;
-            else tDeuda += v.monto;
-            tabla.innerHTML += `<tr><td>${v.fecha}</td><td>${v.cliente}</td><td>${v.productos}</td><td>$${v.monto.toFixed(2)}</td><td style="color:${v.metodo === 'Deuda' ? 'red' : 'green'}"><b>${v.metodo}</b></td><td><button onclick="eliminarVenta(${i})">Eliminar</button></td></tr>`;
+    function cargarSelectorMeses() {
+        const selector = document.getElementById("selectorMes");
+        const mesesEnDatos = [...new Set(ventasGuardadas.map(v => v.mesAno))];
+        const hoy = new Date();
+        const mesActual = `${hoy.getMonth() + 1}/${hoy.getFullYear()}`;
+        
+        if (!mesesEnDatos.includes(mesActual)) mesesEnDatos.push(mesActual);
+        
+        selector.innerHTML = "";
+        mesesEnDatos.forEach(m => {
+            const opt = document.createElement("option");
+            opt.value = m; opt.text = m;
+            if(m === mesActual) opt.selected = true;
+            selector.appendChild(opt);
         });
+    }
+
+    function actualizarTablaAdmin() {
+        const tabla = document.getElementById("cuerpo-tabla");
+        const mesSeleccionado = document.getElementById("selectorMes").value;
+        let gEfectivo = 0, tDeuda = 0;
+        
+        tabla.innerHTML = "";
+        const filtrados = ventasGuardadas.filter(v => v.mesAno === mesSeleccionado);
+
+        filtrados.forEach((v) => {
+            const esCredito = (v.metodo === "Credito");
+            if(esCredito) tDeuda += v.monto; else gEfectivo += v.monto;
+
+            tabla.innerHTML += `<tr>
+                <td>${v.fecha}</td>
+                <td>${v.cliente}</td>
+                <td style="font-size:0.85em;">${v.productos}</td>
+                <td><b>$${v.monto.toFixed(2)}</b></td>
+                <td><span class="badge-pago" style="background:${esCredito ? '#ffebee':'#e8f5e9'}; color:${esCredito ? 'red':'green'}">${v.metodo}</span></td>
+                <td><button onclick="eliminarVenta(${v.id})">🗑️</button></td>
+            </tr>`;
+        });
+
         document.getElementById("ganancia-efectivo").innerText = "$" + gEfectivo.toFixed(2);
         document.getElementById("total-deudas").innerText = "$" + tDeuda.toFixed(2);
     }
 
-    function eliminarVenta(i) {
-        if(confirm("¿Eliminar este registro?")) {
-            ventasGuardadas.splice(i, 1);
+    function eliminarVenta(id) {
+        if(confirm("¿Seguro de borrar este registro?")) {
+            ventasGuardadas = ventasGuardadas.filter(v => v.id !== id);
             localStorage.setItem('ventas_claro', JSON.stringify(ventasGuardadas));
             actualizarTablaAdmin();
         }
     }
 
     function descargarHistoricoExcel() {
-        let sumaTotal = ventasGuardadas.reduce((acc, v) => acc + v.monto, 0);
-        let datosParaExcel = ventasGuardadas.map(v => ({ Fecha: v.fecha, Cliente: v.cliente, Productos: v.productos, Monto: v.monto, Metodo: v.metodo }));
-        datosParaExcel.push({}, { Productos: "TOTAL GENERAL:", Monto: sumaTotal });
+        if (ventasGuardadas.length === 0) return alert("No hay datos para exportar.");
         const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.json_to_sheet(datosParaExcel);
-        XLSX.utils.book_append_sheet(wb, ws, "Ventas");
-        XLSX.writeFile(wb, "Reporte_General_Ventas.xlsx");
-    }
+        
+        // 1. Hoja RESUMEN
+        const meses = [...new Set(ventasGuardadas.map(v => v.mesAno))];
+        const resumenData = meses.map(m => {
+            const vMes = ventasGuardadas.filter(v => v.mesAno === m);
+            const efec = vMes.filter(v => v.metodo === "Efectivo").reduce((a,b) => a+b.monto, 0);
+            const cred = vMes.filter(v => v.metodo !== "Efectivo").reduce((a,b) => a+b.monto, 0);
+            return { "PERIODO": m, "EFECTIVO": efec, "CRÉDITO": cred, "TOTAL": efec+cred };
+        });
+        XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(resumenData), "RESUMEN_GLOBAL");
 
-    function descargarReporteCliente() {
-        let cliente = document.getElementById("nombreCliente").value;
-        if (cliente === "") return alert("Selecciona un cliente.");
-        let filtrados = ventasGuardadas.filter(v => v.cliente === cliente);
-        if (filtrados.length === 0) return alert("Sin consumos para " + cliente);
+        // 2. Hojas por Mes
+        meses.forEach(m => {
+            const detalleMes = ventasGuardadas.filter(v => v.mesAno === m).map(v => ({
+                Fecha: v.fecha, Cliente: v.cliente, Detalle: v.productos, Total: v.monto, Tipo: v.metodo
+            }));
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(detalleMes), m.replace("/","-"));
+        });
 
-        let pagado = filtrados.filter(v => v.metodo === "Efectivo").reduce((acc, v) => acc + v.monto, 0);
-        let deuda = filtrados.filter(v => v.metodo === "Deuda").reduce((acc, v) => acc + v.monto, 0);
-
-        let datos = filtrados.map(v => ({ Fecha: v.fecha, Productos: v.productos, Monto: v.monto, Tipo: v.metodo }));
-        datos.push({}, { Productos: "YA PAGADO (Efectivo):", Monto: pagado }, { Productos: "POR PAGAR (Deuda):", Monto: deuda }, { Productos: "TOTAL CONSUMIDO:", Monto: pagado + deuda });
-
-        const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.json_to_sheet(datos);
-        XLSX.utils.book_append_sheet(wb, ws, "Consumo");
-        XLSX.writeFile(wb, `Consumo_${cliente}.xlsx`);
+        XLSX.writeFile(wb, "Reporte_Ventas_Claro_Completo.xlsx");
     }
 
     function borrarTodo() {
-        if(confirm("¿Borrar todo el historial?")) {
+        if(confirm("¡ALERTA! Esto eliminará permanentemente todos los datos de todos los meses. ¿Proceder?")) {
             localStorage.clear();
             ventasGuardadas = [];
-            actualizarTablaAdmin();
+            location.reload();
         }
     }
 </script>
